@@ -1,4 +1,5 @@
-<footer class="footer py-4 fixed-bottom mx-auto d-none d-lg-block" style="width: 800px;display: block;">
+{{--  <footer class="footer py-4 fixed-bottom mx-auto d-none d-lg-block" style="width: 800px;display: block;">  --}}
+  <footer class="footer py-4 float-bottom mx-auto d-none d-lg-block">
     <div class="container-fluid">
       <div class="row align-items-center justify-content-lg-between">
         <div class="col-lg-6 mb-lg-0 mb-4">

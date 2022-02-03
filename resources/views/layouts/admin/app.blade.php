@@ -23,6 +23,17 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{asset('admin/assets/css/material-dashboard.css?v=3.0.0')}}" rel="stylesheet" />
     
+    <!-- Removing input background colour for Chrome autocomplete -->
+    <!-- https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete -->
+    <style>
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s;            
+        }
+    </style>
+    
     @stack('css')
 
 </head>
