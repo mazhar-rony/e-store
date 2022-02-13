@@ -76,7 +76,7 @@ class ProductController extends Controller
                 File::makeDirectory($path, 0755, true, true);
             }
 
-            $productImage = Image::make($image)->resize(400, 400);
+            $productImage = Image::make($image)->resize(500, 775);
             $productImage->save($path.$imageName);
         }
         
@@ -177,7 +177,7 @@ class ProductController extends Controller
                 File::makeDirectory($path, 0755, true, true);
             }
 
-            $productImage = Image::make($image)->resize(400, 400);
+            $productImage = Image::make($image)->resize(500, 775);
             $productImage->save($path.$imageName);
         }
 
