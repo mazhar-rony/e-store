@@ -85,7 +85,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category Created Successfully');
             
     }
 
@@ -174,7 +174,7 @@ class CategoryController extends Controller
 
         $category->update();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category Updated Successfully');
     }
 
     /**

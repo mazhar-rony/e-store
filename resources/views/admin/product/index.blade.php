@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
 
 @section('breadcrumb')
-    Category
+    Product
 @endsection
 
 @section('page_name')
-    Category
+    Product
 @endsection
 
 @push('css')
@@ -34,13 +34,13 @@
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                   {{--  <h6 class="text-white text-capitalize ps-3">Category table</h6>  --}}
-                  <a href="{{route('categories.create')}}">
+                  <a href="{{route('products.create')}}">
                     <button class="btn btn-icon btn-3 btn-dark float-end me-3" type="button">
                       <span class="btn-inner--icon"><i class="material-icons">add</i></span>
-                      <span class="btn-inner--text">add new category</span>
+                      <span class="btn-inner--text">add new product</span>
                     </button>
                   </a>
-                  <h6 class="text-white text-capitalize ps-3">Category table</h6>
+                  <h6 class="text-white text-capitalize ps-3">product table</h6>
                 </div>
               </div>
               <div class="card-body px-0 pb-2">
@@ -51,14 +51,16 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Serial#</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">QTY</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Popular</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trending</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($categories as $key => $category)
+                      @foreach ($products as $key => $product)
                         <tr>
                           <td>
                             <div class="d-flex px-2 py-1">
@@ -70,30 +72,38 @@
                           <td>
                             <div class="d-flex px-2 py-1">                             
                               <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">{{ $category->name }}</h6>
+                                <h6 class="mb-0 text-sm">{{ $product->name }}</h6>
                               </div>
                             </div>
                           </td>
                           <td>
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">{{ $category->description }}</h6>
+                              <h6 class="mb-0 text-sm">{{ $product->description }}</h6>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">{{ $product->category->name }}</h6>
                             </div>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm {{ $category->status == 1 ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">{{ $category->status == 1 ? 'Active' : 'Inactive' }}</span>
+                            <span class="badge badge-sm bg-gradient-danger">{{ $product->qty }}</span>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm {{ $category->popular == 1 ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">{{ $category->popular == 1 ? 'Active' : 'Inactive' }}</span>
+                            <span class="badge badge-sm {{ $product->status == 1 ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">{{ $product->status == 1 ? 'Active' : 'Inactive' }}</span>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm {{ $product->trending == 1 ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">{{ $product->trending == 1 ? 'Active' : 'Inactive' }}</span>
                           </td>
                           <td class="align-middle text-center">
                              <div>
-                               <img src="{{ isset($category->image) ? asset('uploads/category/'.$category->image) : '' }}" class="{{ isset($category->image) ? 'avatar avatar-sm me-3 border-radius-lg' : '' }}" alt="{{ $category->image }}">
+                               <img src="{{ isset($product->image) ? asset('uploads/product/'.$product->image) : '' }}" class="{{ isset($product->image) ? 'avatar avatar-sm me-3 border-radius-lg' : '' }}" alt="{{ $product->image }}">
                               </div>
                           </td>
                           <td class="align-middle">
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm active" role="button" aria-pressed="true">Edit</a> | 
-                            <button onclick="deleteCategory({{ $category->id }})" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Delete</button>
-                            <form action="{{ route('categories.destroy', $category->id) }}" id="delete-form-{{ $category->id }}" method="POST">
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm active" role="button" aria-pressed="true">Edit</a> | 
+                            <button onclick="deleteProduct({{ $product->id }})" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Delete</button>
+                            <form action="{{ route('products.destroy', $product->id) }}" id="delete-form-{{ $product->id }}" method="POST">
                               @csrf
                               @method('DELETE')
                             </form>
@@ -106,7 +116,7 @@
               </div>
               <div class="card-footer pagination pagination-sm d-flex justify-content-end">
 
-                {{ $categories->links() }}
+                {{ $products->links() }}
     
               </div>
             </div>
@@ -118,7 +128,7 @@
 @push('js')
 
 <script>
-  function deleteCategory(id)
+  function deleteProduct(id)
   {
     Swal.fire({
       title: 'Are you sure?',

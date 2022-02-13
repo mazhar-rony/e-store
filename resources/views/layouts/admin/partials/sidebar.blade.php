@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="{{url('/dashboard')}}">
+          <a class="nav-link text-white {{ Request::is('dashboard') ? 'active bg-gradient-primary' : '' }}" href="{{ url('/dashboard') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -22,11 +22,19 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="{{route('categories.index')}}">
+          <a class="nav-link text-white {{ Request::is('categories*') ? 'active bg-gradient-primary' : '' }} " href="{{ route('categories.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
             <span class="nav-link-text ms-1">Category</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ Request::is('products*') ? 'active bg-gradient-primary' : '' }}" href="{{ route('products.index') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">view_in_ar</i>
+            </div>
+            <span class="nav-link-text ms-1">Product</span>
           </a>
         </li>
         <li class="nav-item">
